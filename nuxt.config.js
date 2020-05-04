@@ -34,7 +34,6 @@ export default {
   */
   router: {
     middleware: [
-      // 'auth/index',
       'auth'
     ]
   },

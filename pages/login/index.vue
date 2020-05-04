@@ -61,13 +61,11 @@ export default {
   auth: false,
   data() {
     return {
-      email: 'admin@gmail.com',
+      email: 'employee@gmail.com',
       password: '123456',
     }
   },
-  created() {
-    console.log(this.$apolloHelpers.getToken())
-  },
+
   methods: {
     login() {
       this.$auth
@@ -77,11 +75,13 @@ export default {
             email: this.email,
             password: this.password,
           },
+          mutationKey: 'loginEmployee',
           tokenKey: 'token.access_token',
         })
-        .then(() =>
+        .then(
+          () => true
           // window.location.href = '/'
-          this.$router.replace({ name: 'index' })
+          // this.$router.replace({ name: 'index' })
         )
       // this.$apollo
       //   .mutate({

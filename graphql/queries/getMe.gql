@@ -1,8 +1,10 @@
 query Query {
-  me {
+  meEmployee {
     id
     name
     email
     avatar
+    brand_id
+    salon_id
   }
 }
