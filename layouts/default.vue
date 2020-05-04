@@ -1,6 +1,6 @@
 <template>
   <v-app dark>
-    <v-navigation-drawer v-model="drawer" clipped app>
+    <!-- <v-navigation-drawer v-model="drawer" clipped app>
       <v-list two-line>
         <v-list-item
           active-class="primary white--text"
@@ -39,9 +39,9 @@
           </v-list>
         </v-menu>
       </v-toolbar-items>
-    </v-app-bar>
+    </v-app-bar> -->
     <v-content class="grey lighten-4">
-      <v-container>
+      <v-container fluid class="fill-height pa-0">
         <nuxt />
       </v-container>
     </v-content>
