@@ -1,17 +1,21 @@
 <template>
-  <v-app>
-    <v-content>
-      <nuxt />
+  <v-app dark>
+    <v-content class="grey lighten-4">
+      <v-container fluid class="fill-height pa-0">
+        <nuxt />
+      </v-container>
     </v-content>
   </v-app>
 </template>
 
 <script>
+import { mapState } from 'vuex'
+
 export default {
-  data () {
+  data() {
     return {
-    
+      title: 'Hệ thống quản lý salon',
     }
-  }
+  },
 }
 </script>

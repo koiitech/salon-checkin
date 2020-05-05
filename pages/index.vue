@@ -1,28 +1,30 @@
 <template>
   <v-row no-gutters class="fill-height">
     <v-col order="2" order-md="1" class="blue" cols="12" md="5" lg="4">
-      <v-row class="align-center justify-center fill-height">
-        <v-card width="70%" flat outlined class="transparent" dark>
-          <v-form @submit.prevent="checkin">
-            <v-card-title class="text-uppercase display-1 justify-center"
-              >Đăng nhập</v-card-title
-            >
-            <v-card-text class="px-10 mt-5">
-              <v-text-field
-                v-model="phone"
-                label="Số điện thoại"
-                height="60"
-                solo-inverted
-                prepend-inner-icon="mdi-phone"
-                required
-              ></v-text-field>
-              <v-btn x-large color="primary" block type="submit"
-                ><v-icon left>mdi-login</v-icon> Đăng nhập</v-btn
+      <v-card class="fill-height elevation-5" tile img="/images/checkin-bg.jpg">
+        <v-row class="align-center justify-center fill-height">
+          <v-card width="70%" flat outlined class="transparent" dark>
+            <v-form @submit.prevent="checkin">
+              <v-card-title class="text-uppercase display-1 justify-center"
+                >Đăng nhập</v-card-title
               >
-            </v-card-text>
-          </v-form>
-        </v-card>
-      </v-row>
+              <v-card-text class="px-10 mt-5">
+                <v-text-field
+                  v-model="phone"
+                  label="Số điện thoại"
+                  height="60"
+                  solo-inverted
+                  prepend-inner-icon="mdi-phone"
+                  required
+                ></v-text-field>
+                <v-btn x-large color="primary" block type="submit"
+                  ><v-icon left>mdi-login</v-icon> Đăng nhập</v-btn
+                >
+              </v-card-text>
+            </v-form>
+          </v-card>
+        </v-row>
+      </v-card>
     </v-col>
     <v-col order="1" order-md="2">
       <v-row class="mx-1">
@@ -94,6 +96,7 @@ import checkinMutation from '~/graphql/queries/checkin.gql'
 import { mapState, mapActions } from 'vuex'
 
 export default {
+  layout: 'blank',
   apollo: {
     salon: {
       query: getSalon,
@@ -130,7 +133,7 @@ export default {
         })
         .then(({ data }) => Object.values(data)[0])
         .then((customer) => this.setCustomer(customer))
-        .then(() => console.log('Đã đăng nhập thành công'))
+        .then(() => this.$router.push({ name: 'menus' }))
     },
   },
 }
