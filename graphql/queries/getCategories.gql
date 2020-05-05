@@ -4,7 +4,7 @@ query GetCategories($salon_id: ID) {
     name
     image
     description
-    services {
+    children {
       id
       name
       description
@@ -12,7 +12,7 @@ query GetCategories($salon_id: ID) {
       price
       index
       minutes
-      extras {
+      children {
         id
         name
         description

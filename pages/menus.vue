@@ -20,6 +20,7 @@
         </div>
       </template>
     </v-toolbar>
+
     <v-expansion-panels focusable>
       <v-expansion-panel v-for="category in categories" :key="category.id">
         <v-expansion-panel-header>
@@ -39,7 +40,28 @@
           </v-list>
         </v-expansion-panel-header>
         <v-expansion-panel-content>
-          <v-list three-line>
+          <v-treeview
+            selectable
+            rounded
+            open-on-click
+            hoverable
+            activatable
+            selected-color="red"
+            :items="category.children"
+            selection-type="independent"
+          >
+            <template v-slot:label="props">
+              <v-list-item>
+                <v-list-item-content>
+                  <v-list-item-title>{{ props.item.name }}</v-list-item-title>
+                  <v-list-item-subtitle>{{
+                    props.item.name
+                  }}</v-list-item-subtitle>
+                </v-list-item-content>
+              </v-list-item>
+            </template>
+          </v-treeview>
+          <!-- <v-list three-line>
             <template v-for="service in category.services">
               <v-list-item
                 class="ml-3"
@@ -106,7 +128,7 @@
                 </template>
               </v-list-group>
             </template>
-          </v-list>
+          </v-list> -->
         </v-expansion-panel-content>
       </v-expansion-panel>
     </v-expansion-panels>
