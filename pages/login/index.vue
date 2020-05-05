@@ -79,9 +79,9 @@ export default {
           tokenKey: 'token.access_token',
         })
         .then(
-          () => true
+          // () => true
           // window.location.href = '/'
-          // this.$router.replace({ name: 'index' })
+          this.$router.replace({ name: 'index' })
         )
       // this.$apollo
       //   .mutate({

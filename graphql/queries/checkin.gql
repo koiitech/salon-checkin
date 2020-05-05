@@ -1,0 +1,8 @@
+query Checkin($phone: String!) {
+  checkin(phone: $phone) {
+    id
+    name
+    email
+    avatar
+  }
+}

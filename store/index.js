@@ -1,9 +1,16 @@
 export const state = () => ({
-  counter: 0
+  customer: {}
 })
 
 export const mutations = {
-  increment(state) {
-    state.counter++
+  CUSTOMER(state, customer) {
+    state.customer = Object.assign({}, customer)
   }
 }
+export const actions = {
+  setCustomer({ commit }, customer) {
+    commit('CUSTOMER', customer)
+  }
+}
+
+
