@@ -53,6 +53,17 @@ export const getters = {
       }
       return items
     }, [])
+  },
+  amount: (state, getters, rootGetters, rootState) => {
+
+    return getters['services'].reduce((items, item) => {
+      items += item.price
+
+      if (item.extras) {
+        items += item.extras.reduce((extraAmount, extra) => extraAmount + extra.price, 0)
+      }
+      return items
+    }, 0)
   }
 }
 
