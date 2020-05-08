@@ -1,0 +1,28 @@
+mutation createAppointment(
+  $salon_id: ID!
+  $customer_id: ID
+  $employee_id: ID
+  $scheduled_at: String
+  $services: [CreateAppointmentDetailsInput!]
+) {
+  createAppointment(
+    salon_id: $salon_id
+    customer_id: $customer_id
+    employee_id: $employee_id
+    scheduled_at: $scheduled_at
+    details: { create: $services }
+  ) {
+    id
+    salon {
+      id
+      name
+    }
+    details {
+      id
+      service {
+        id
+        name
+      }
+    }
+  }
+}

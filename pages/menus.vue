@@ -62,7 +62,7 @@
             </template>
           </v-treeview> -->
           <v-list three-line>
-            <template v-for="(service) in category.services">
+            <template v-for="service in category.services">
               <v-list-item
                 class="ml-3"
                 v-if="service.extras.length === 0"
@@ -72,7 +72,7 @@
                   <v-checkbox
                     color="deep-purple accent-4"
                     v-model="services"
-                    :value="service"
+                    :value="service.id"
                   ></v-checkbox>
                 </v-list-item-action>
                 <v-list-item-content>
@@ -96,7 +96,7 @@
                       <v-checkbox
                         color="deep-purple accent-4"
                         v-model="services"
-                        :value="service"
+                        :value="service.id"
                       ></v-checkbox>
                     </v-list-item-avatar>
                     <v-list-item-content>
@@ -111,11 +111,11 @@
                   </v-list-item>
                 </template>
 
-                <template v-for="(extra) in service.extras">
+                <template v-for="extra in service.extras">
                   <v-list-item
                     class="ml-3"
                     :key="`${category.id}-${service.id}-${extra.id}`"
-                    :disabled="!services.some(item => item.id === service.id)"
+                    :disabled="!services.includes(service.id)"
                   >
                     <v-list-item-avatar>
                       <v-checkbox
@@ -149,7 +149,9 @@
 
 <script>
 import getCategories from '~/graphql/queries/getCategories.gql'
-import { mapState, mapActions } from 'vuex'
+import createAppointment from '~/graphql/mutations/createAppointment.gql'
+
+import { mapState, mapActions, mapMutations } from 'vuex'
 export default {
   apollo: {
     categories: {
@@ -159,16 +161,15 @@ export default {
           salon_id: this.user.salon_id,
         }
       },
+      update(data) {
+        this.CATEGORIES(data.categories)
+      },
     },
-  },
-  data() {
-    return {
-      categories: [],
-    }
   },
   computed: {
     ...mapState('auth', ['user']),
     ...mapState('cart', ['services']),
+    ...mapState('menus', ['categories']),
     ...mapState(['customer']),
     services: {
       get() {
@@ -180,10 +181,11 @@ export default {
     },
   },
   methods: {
+    ...mapMutations('menus', ['CATEGORIES']),
     ...mapActions('cart', ['addExtra', 'removeExtra']),
     toggleExtra(service_id, extra_id, checked) {
       if (!checked) {
-        this.removeExtra(service_id, extra_id)
+        this.removeExtra({ service_id, extra_id })
       } else {
         this.addExtra({ service_id, extra_id })
       }

@@ -20,10 +20,118 @@
         </div>
       </template>
     </v-toolbar>
+    <v-card-text>
+      <v-container>
+        <v-row align="center">
+          <v-col>
+            <v-card>
+              <v-card-title class="justify-center text-uppercase headline"
+                >Dịch vụ</v-card-title
+              >
+              <v-card-text>
+                <!-- <v-list three-line>
+                  <template v-for="service in servicesSelected">
+                    <v-list-item
+                      class="ml-3"
+                      v-if="service.extras.length === 0"
+                      :key="service.id"
+                    >
+                      <v-list-item-action>
+                        <v-checkbox
+                          color="deep-purple accent-4"
+                          v-model="services"
+                          :value="service.id"
+                        ></v-checkbox>
+                      </v-list-item-action>
+                      <v-list-item-content>
+                        <v-list-item-title>{{
+                          service.name
+                        }}</v-list-item-title>
+                        <v-list-item-subtitle>{{
+                          service.description
+                        }}</v-list-item-subtitle>
+                      </v-list-item-content>
+                      <v-list-item-action>
+                        ${{ service.price }}
+                      </v-list-item-action>
+                    </v-list-item>
+                    <v-list-group
+                      v-else
+                      three-line
+                      :key="`${category.id}-${service.id}`"
+                      no-action
+                      :value="false"
+                    >
+                      <template v-slot:activator>
+                        <v-list-item>
+                          <v-list-item-avatar>
+                            <v-checkbox
+                              color="deep-purple accent-4"
+                              v-model="services"
+                              :value="service.id"
+                            ></v-checkbox>
+                          </v-list-item-avatar>
+                          <v-list-item-content>
+                            <v-list-item-title>{{
+                              service.name
+                            }}</v-list-item-title>
+                            <v-list-item-subtitle>{{
+                              service.description
+                            }}</v-list-item-subtitle>
+                          </v-list-item-content>
+                          <v-list-item-action>
+                            ${{ service.price }}
+                          </v-list-item-action>
+                        </v-list-item>
+                      </template>
 
-  
+                      <template v-for="extra in service.extras">
+                        <v-list-item
+                          class="ml-3"
+                          :key="`${category.id}-${service.id}-${extra.id}`"
+                          :disabled="!services.includes(service.id)"
+                        >
+                          <v-list-item-avatar>
+                            <v-checkbox
+                              color="deep-purple accent-4"
+                              :value="extra.id"
+                              @change="
+                                toggleExtra(service.id, extra.id, $event)
+                              "
+                            ></v-checkbox>
+                          </v-list-item-avatar>
+                          <v-list-item-content>
+                            <v-list-item-title>{{
+                              extra.name
+                            }}</v-list-item-title>
+                            <v-list-item-subtitle>{{
+                              extra.description
+                            }}</v-list-item-subtitle>
+                          </v-list-item-content>
+                          <v-list-item-action>
+                            ${{ extra.price }}
+                          </v-list-item-action>
+                        </v-list-item>
+                      </template>
+                    </v-list-group>
+                  </template>
+                </v-list> -->
+              </v-card-text>
+            </v-card>
+          </v-col>
+        </v-row>
+      </v-container>
+    </v-card-text>
+
     <v-footer fixed app>
-      <v-btn x-large @click="next" color="primary" block>Tiếp theo</v-btn>
+      <v-row>
+        <v-col>
+          <v-btn x-large @click="$router.back()" block>Quay lại</v-btn>
+        </v-col>
+        <v-col>
+          <v-btn x-large @click="submit" color="primary" block>Đồng ý</v-btn>
+        </v-col>
+      </v-row>
     </v-footer>
   </v-card>
 </template>
@@ -69,14 +177,14 @@ export default {
         this.addExtra({ service_id, extra_id })
       }
     },
-    next() {
+    submit() {
       this.$router.push({ name: 'cart' })
     },
   },
   mounted() {
-    if (!this.customer.id) {
-      this.$router.replace({ name: 'index' })
-    }
+    // if (!this.customer.id) {
+    //   this.$router.replace({ name: 'index' })
+    // }
   },
 }
 </script>
