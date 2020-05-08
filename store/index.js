@@ -1,11 +1,14 @@
+import Vue from "vue";
+
 export const state = () => ({
-  customer: {}
+  customer: {},
 })
 
 export const mutations = {
   CUSTOMER(state, customer) {
-    state.customer = Object.assign({}, customer)
-  }
+    Vue.set(state, 'customer', customer)
+  },
+
 }
 export const actions = {
   setCustomer({ commit }, customer) {
