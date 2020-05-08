@@ -21,12 +21,12 @@
     <v-container>
       <v-row align="center">
         <v-col>
-          <v-card>
+          <v-card outlined>
             <v-card-title class="justify-center text-uppercase headline"
               >Dịch vụ</v-card-title
             >
             <v-card-text>
-              <v-list three-line>
+              <v-list>
                 <template v-for="service in services">
                   <v-list-item :key="service.id">
                     <v-list-item-action>
@@ -34,9 +34,9 @@
                     </v-list-item-action>
                     <v-list-item-content>
                       <v-list-item-title>{{ service.name }}</v-list-item-title>
-                      <v-list-item-subtitle>{{
+                      <!-- <v-list-item-subtitle>{{
                         service.description
-                      }}</v-list-item-subtitle>
+                      }}</v-list-item-subtitle> -->
                     </v-list-item-content>
                     <v-list-item-action>
                       ${{ service.price }}
@@ -44,17 +44,18 @@
                   </v-list-item>
                   <template v-for="extra in service.extras">
                     <v-list-item
+                      dense
                       class="pl-12"
                       :key="`${service.id}-${extra.id}`"
                     >
                       <v-list-item-action> </v-list-item-action>
-                      <v-list-item-content>
+                      <v-list-item-content class="text-none">
                         <v-list-item-title>{{ extra.name }}</v-list-item-title>
-                        <v-list-item-subtitle>{{
+                        <!-- <v-list-item-subtitle>{{
                           extra.description
-                        }}</v-list-item-subtitle>
+                        }}</v-list-item-subtitle> -->
                       </v-list-item-content>
-                      <v-list-item-action>
+                      <v-list-item-action class="justify-right">
                         ${{ extra.price }}
                       </v-list-item-action>
                     </v-list-item>
@@ -118,26 +119,29 @@
                 </v-list-item>
               </v-list>
             </v-card-text>
+            <v-card-actions>
+              <v-row>
+                <v-col>
+                  <v-btn x-large @click="$router.back()" block>Quay lại</v-btn>
+                </v-col>
+                <v-col>
+                  <v-btn x-large @click="submit" color="primary" block
+                    >Đồng ý</v-btn
+                  >
+                </v-col>
+              </v-row>
+            </v-card-actions>
           </v-card>
         </v-col>
       </v-row>
     </v-container>
-
-    <v-footer fixed app>
-      <v-row>
-        <v-col>
-          <v-btn x-large @click="$router.back()" block>Quay lại</v-btn>
-        </v-col>
-        <v-col>
-          <v-btn x-large @click="submit" color="primary" block>Đồng ý</v-btn>
-        </v-col>
-      </v-row>
-    </v-footer>
   </v-card>
 </template>
 
 <script>
 import getCategories from '~/graphql/queries/getCategories.gql'
+import createAppointment from '~/graphql/mutations/createAppointment.gql'
+
 import { mapState, mapActions, mapGetters } from 'vuex'
 export default {
   apollo: {
@@ -170,13 +174,25 @@ export default {
       }
     },
     submit() {
-      this.$router.push({ name: 'cart' })
+      let details = this.services.map((service) => ({
+        service_id: service.id,
+        extras: service.extras.map((extra) => extra.id),
+      }))
+
+      this.$apollo.mutate({
+        mutation: createAppointment,
+        variables: {
+          salon_id: this.user.salon_id,
+          customer_id: this.customer.id,
+          employee_id: null,
+          scheduled_at: this.$moment().format('YYYY-MM-DD HH:mm:ss'),
+          details: details,
+        },
+      })
     },
   },
   mounted() {
-    // if (!this.customer.id) {
-    //   this.$router.replace({ name: 'index' })
-    // }
+   console.log(this.$moment().format('YYYY-MM-DD HH:mm:ss'))
   },
 }
 </script>

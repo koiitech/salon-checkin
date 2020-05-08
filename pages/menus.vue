@@ -149,7 +149,6 @@
 
 <script>
 import getCategories from '~/graphql/queries/getCategories.gql'
-import createAppointment from '~/graphql/mutations/createAppointment.gql'
 
 import { mapState, mapActions, mapMutations } from 'vuex'
 export default {

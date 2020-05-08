@@ -13,16 +13,7 @@ mutation createAppointment(
     details: { create: $services }
   ) {
     id
-    salon {
-      id
-      name
-    }
-    details {
-      id
-      service {
-        id
-        name
-      }
-    }
+    scheduled_at
+    checkedin_at
   }
 }
